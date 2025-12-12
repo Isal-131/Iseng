@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="in">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=overlays-content">
+    
+    <title>Pupuk Sumber Tani</title>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js"></script>
+    <link rel="stylesheet" href="baru.css">
+</head>
+<body onload="brython()">
+    <div id="dv1">
+        <h2>Masukan jumlah pupuk</h2>
+        <div>
+            <label>Jumlah UREA :</label>
+            <input placeholder=" Contoh 100" type="number" id="ur" value="">
+        </div>
+        <div>
+            <label>Jumlah NPK :</label>
+            <input placeholder=" Contoh 100" type="number" id="phn" value="">
+        </div>
+        
+        <button id="setBtn">SET JUMLAH</button>
+    </div>
+    <div id="dv2">
+        <div>
+            <label>pupuk UREA yang keluar</label>
+            <input type="number" name="" id="k1">
+        </div>
+        <div>
+            <label>pupuk NPK yang keluar</label>
+            <input type="number" name="" id="k2">
+        </div>
+        
+        
+        <button id="btn">KURANGI</button>
+    </div>
+    
+    <div id="dv3">
+        <h3>hasil</h3>
+        <p>UREA : <span id="p1"></span></p>
+        <p>NPK : <span id="p2"></span></p>
+        <p id="selesai"></p>
+        
+        <h3>riwayat pengurangan:</h3>
+        <pre id="history" style="background:#eee; padding:10px; border-radius:8px; white-space:pre-wrap;"></pre>
+    </div>
+    <script>
+    let pupuk_urea = 0;
+    let pupuk_phonska = 0;
+
+    function set_angka() {
+        pupuk_urea = parseInt(document.getElementById("ur").value) || 0;
+        pupuk_phonska = parseInt(document.getElementById("phn").value) || 0;
+
+        document.getElementById("p1").textContent = pupuk_urea;
+        document.getElementById("p2").textContent = pupuk_phonska;
+
+        document.getElementById("history").textContent = "";
+        document.getElementById("selesai").textContent = "";
+    }
+
+    function kurangi() {
+        let k1 = parseInt(document.getElementById("k1").value) || 0;
+        let k2 = parseInt(document.getElementById("k2").value) || 0;
+
+        pupuk_urea -= k1;
+        pupuk_phonska -= k2;
+
+        let history = document.getElementById("history");
+        history.textContent += `kurang ${k1} dan ${k2} → sisa: ${pupuk_urea}, ${pupuk_phonska}\n`;
+
+        document.getElementById("p1").textContent = pupuk_urea;
+        document.getElementById("p2").textContent = pupuk_phonska;
+
+        if (pupuk_urea <= 0 && pupuk_phonska <= 0) {
+            document.getElementById("selesai").textContent = "kedua angka sudah habis!";
+        }
+    }
+
+    document.getElementById("btn").addEventListener("click", kurangi);
+    document.getElementById("setBtn").addEventListener("click", set_angka);
+</script>
+</body>
+</html>
